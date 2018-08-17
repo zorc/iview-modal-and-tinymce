@@ -1,57 +1,40 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript" target="_blank">typescript</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+    <Modal :value="value" @on-visible-change="visibleChange">
+        <editor v-model="text" :init="tinymceInit"></editor>
+    </Modal>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+    import {Component, Vue, Inject, Prop, Watch} from 'vue-property-decorator';
+    import tinymce from 'tinymce';
+    import 'tinymce/themes/modern/theme';
+    import Editor from '@tinymce/tinymce-vue';
 
-@Component
-export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
-}
+    @Component({
+        components: {'editor': Editor}
+    })
+    export default class HelloWorld extends Vue {
+        @Prop({default: false}) value!: boolean;
+        visibleChange(value: boolean) {
+            if (!value) {
+                this.$emit('input', value);
+            }
+            tinymce.init(this.tinymceInit);
+        }
+        text = 'This is text';
+
+        tinymceInit = {
+            skin_url: '/tinymce/skins/lightgray',
+            height: 300
+        };
+
+        mounted() {
+            tinymce.init(this.tinymceInit);
+        }
+
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
