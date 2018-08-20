@@ -1,5 +1,8 @@
 <template>
-    <Modal :value="value" @on-visible-change="visibleChange">
+    <!--<el-dialog title="收货地址" :visible.sync="value" :open="visibleChange" :close="visibleChange">-->
+    <!--<editor v-model="text" :init="tinymceInit"></editor>-->
+    <!--</el-dialog>-->
+    <Modal :value="value" @on-visible-change="visibleChange" :transfer=false>
         <editor v-model="text" :init="tinymceInit"></editor>
     </Modal>
 </template>
@@ -15,12 +18,14 @@
     })
     export default class HelloWorld extends Vue {
         @Prop({default: false}) value!: boolean;
+
         visibleChange(value: boolean) {
             if (!value) {
                 this.$emit('input', value);
             }
             tinymce.init(this.tinymceInit);
         }
+
         text = 'This is text';
 
         tinymceInit = {

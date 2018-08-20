@@ -5,6 +5,14 @@ But if I switch to another child router, then switch back. I will not be able to
 And there is no any error information.
 And all element id in the tinymce of the modal will change
 
+# FIX
+:transfer=false
+`
+<Modal :value="value" @on-visible-change="visibleChange" :transfer=false>
+        <editor v-model="text" :init="tinymceInit"></editor>
+</Modal>
+`
+
 # Use
 npm install
 npm run serve

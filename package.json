@@ -10,6 +10,7 @@
   "dependencies": {
     "@tinymce/tinymce-vue": "^1.0.8",
     "@types/tinymce": "^4.5.16",
+    "element-ui": "^2.4.6",
     "iview": "^3.0.0",
     "tinymce": "^4.8.2",
     "vue": "^2.5.16",
