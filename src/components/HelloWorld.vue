@@ -24,6 +24,7 @@
                 this.$emit('input', value);
             }
             tinymce.init(this.tinymceInit);
+            this.$Message.info('This is a info tip');
         }
 
         text = 'This is text';
